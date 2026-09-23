@@ -20,6 +20,13 @@ public class LinkedListExamples {
      */
     public static <T> void displayWithPositions(LLNode<T> head) {
         // TODO: Implement this function
+        int counter = 0;
+        while(head != null) {
+            // Print the current position and the info of the node
+            System.out.println("Position: " + counter + ", Info: " + head.getInfo());
+            head = head.getNext();
+            counter++;
+        }
         // hint: Use a counter variable and traverse the list    
     }
     
@@ -31,6 +38,7 @@ public class LinkedListExamples {
         // TODO: Implement this function
         // Handle special case: removing the first element
         // For other elements: find the node before the target
+        
         return head; // placeholder
     }
     
@@ -70,6 +78,7 @@ public class LinkedListExamples {
      */
     public static <T> int getLength(LLNode<T> head) {
         // TODO: Implement this helper function
+        
         return 0; // placeholder
     }
 
