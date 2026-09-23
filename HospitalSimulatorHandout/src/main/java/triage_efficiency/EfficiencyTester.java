@@ -1,5 +1,5 @@
 package triage_efficiency;
-
+import java.util.Arrays;
 import java.util.*;
 import patient_intake.Patient;
 
@@ -28,7 +28,7 @@ public class EfficiencyTester {
             if(pid.equals(patients[i].getPatientID())){ // wrong syntax come back to it later there we go needed a .equals with get patient id 
                 return patients[i];
             }
-            return patients[i];
+            
 
         }
         return null; // Remove this line and implement the method.
@@ -46,11 +46,12 @@ public class EfficiencyTester {
     public Patient binarySearch(Patient[] patients, String pid) {
         // TODO REQUIRED: Implement iterative binary search.
         // The array must be sorted by patientID before calling this method.
-        int high=patients.length;
+        int high=patients.length-1;
         int low=0;
-        int mid= (high+low)/2; // might put inside function
+        // int mid= (high+low)/2; // might put inside function
         while(low<high){
-            if(pid.equals(patients[mid].getPatientID())){ // same as above have to implent the search  // same as above need a .equals with get patient id
+            int mid= (high+low)/2;
+            if(pid.compareTo(patients[mid].getPatientID())==0){ // same as above have to implent the search  // same as above need a .equals with get patient id
                 return patients[mid];
             }
             else if 
@@ -61,7 +62,7 @@ public class EfficiencyTester {
             
                 low=mid+1;
             }
-            return patients[mid]; // not sure if this correct
+            // not sure if this correct
             
         }
         return null;

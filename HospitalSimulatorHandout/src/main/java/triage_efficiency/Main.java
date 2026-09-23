@@ -5,10 +5,10 @@ import patient_intake.Patient;
 public class Main {
     public static void main(String[] args) {
         //  Generate the patient data.
-        String [] patientIDs = {"P001","P002","P003","P004","P005","P006","P007","P008","P009","P010"}; // its already sorted but im still trying to test the code on bottom 
-        String [] firstNames = {"John","Mary","Robert","Patricia","Michael","Linda","James","Elizabeth","David","Barbara"};
-        String [] lastNames = {"Smith","Johnson","Williams","Brown","Davis","Miller","Wilson","Moore","Taylor","Anderson"};
-        int [] ages = {45,32,67,28,8,55,41,72,19,35};
+        String [] patientIDs = {"P001","P002","P003"}; // its already sorted but im still trying to test the code on bottom 
+        String [] firstNames = {"John","Mary","Robert"};
+        String [] lastNames = {"Smith","Johnson","Williams"};
+        int [] ages = {45,32,67};
         
         // TODO REQUIRED: Sort the data by patientID when needed.
         // TODO REQUIRED: Run each search method and print a found and not-found example.
@@ -29,7 +29,12 @@ public class Main {
         // String [] firstNames = {"John","Mary","Robert","Patricia","Michael","Linda","James","Elizabeth","David","Barbara"};
         // String [] lastNames = {"Smith","Johnson","Williams","Brown","Davis","Miller","Wilson","Moore","Taylor","Anderson"}; // this is generetated already and dont need it into the function
         // int [] ages = {45,32,67,28,8,55,41,72,19,35};
-       for(int i=0;i<count;i++){
+        String [] patientIDs = {"P001","P002","P003"}; // its already sorted but im still trying to test the code on bottom 
+        String [] firstNames = {"John","Mary","Robert"};
+        String [] lastNames = {"Smith","Johnson","Williams"};
+        int [] ages = {45,32,67};
+        Patient[] patients = new Patient[count];
+        for(int i=0;i<count;i++){
             patients[i]= new Patient(patientIDs[i],firstNames[i],lastNames[i],ages[i]);
         }
         return patients; // this return the patients that just got added the array and shows patient id first, last names and ages
@@ -57,11 +62,13 @@ P010,Barbara Anderson,35,Cut on Hand,3,Treatment,ER-107,17,INS-01234 */ // all t
      * The binary-search version only works on an array sorted by patientID.
      */
     public static Patient[] sortByPatientId(Patient[] patients) {
+        
         // TODO REQUIRED: Sort the array by patientID before testing binary search.
         for(int i=0;i<patients.length;i++){
+            Patient temp=patients[i];
             for(int j=i+1;j<patients.length;j++){
                 if(patients[i].getPatientID().compareTo(patients[j].getPatientID())>0){ // i dont have a single idea as of now where this 0 comes from i had it written as if patients[i].getPatientID()>(patients[j].getPatientID())
-                    Patient temp=patients[i];
+                     temp=patients[i];
                     patients[i]=patients[j];
                     patients[j]=temp;
                 }

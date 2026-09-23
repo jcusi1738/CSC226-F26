@@ -1,4 +1,5 @@
 package patient_intake;
+import java.util.Arrays;
 // Switch from using ArrayList to a flat array implementation for patient storage.
 
 public class PatientRegistry {
@@ -33,7 +34,7 @@ public class PatientRegistry {
      * The optional encapsulation extension requires returning a defensive copy.
      */
     public Patient[] getPatientRegistry() {
-        return patientRegistry; // TODO REQUIRED: Return the patients currently stored.
+        return Arrays.copyOf(patientRegistry, size); // TODO REQUIRED: Return the patients currently stored.
     }
 
     public Patient getPatientByID(String patientID) {
@@ -99,7 +100,7 @@ public class PatientRegistry {
     
     @Override
     public String toString() {
-        return "The patient registry contains " + size + " patients."; // TODO REQUIRED: Return a useful representation of the registry.
+        return "PateintRegistry{size=" + size + "}"; // TODO REQUIRED: Return a useful representation of the registry.
     }
 
 }
