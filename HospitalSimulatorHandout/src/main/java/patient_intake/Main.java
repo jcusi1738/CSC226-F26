@@ -21,7 +21,7 @@ public class Main {
             String nameParts[] = fullName.split(" "); // split full name instead 2 
             String firstName = nameParts[0]; // new array list to split the full name into first and last name
             String lastName = nameParts[1];
-            Patient patient = new Patient(patientID, firstName, lastName, age);
+            Patient patient = new Patient(patientID,  firstName, lastName, age);
             patients.addPatient(patient);
 
 
@@ -38,4 +38,3 @@ public class Main {
       }
    }
 }
-git pull origin Main

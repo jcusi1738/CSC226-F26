@@ -5,6 +5,14 @@ import patient_intake.Patient;
 
 public class EfficiencyTester {
 
+   int i =0;
+
+        
+
+
+        
+    
+
     /**
      * REQUIRED (80%): Implement linear search.
      *
@@ -16,6 +24,13 @@ public class EfficiencyTester {
     public Patient linearSearch(Patient[] patients, String pid) {
         // TODO REQUIRED: Implement linear search.
         // Search the entire array in order and return the matching Patient.
+        for(int i=0;i<patients.length; i++){
+            if(pid.equals(patients[i].getPatientID())){ // wrong syntax come back to it later there we go needed a .equals with get patient id 
+                return patients[i];
+            }
+            return patients[i];
+
+        }
         return null; // Remove this line and implement the method.
     }
 
@@ -27,10 +42,29 @@ public class EfficiencyTester {
      *
      * This method must run in O(log n) time.
      */
+   
     public Patient binarySearch(Patient[] patients, String pid) {
         // TODO REQUIRED: Implement iterative binary search.
         // The array must be sorted by patientID before calling this method.
-        return null; // Remove this line and implement the method.
+        int high=patients.length;
+        int low=0;
+        int mid= (high+low)/2; // might put inside function
+        while(low<high){
+            if(pid.equals(patients[mid].getPatientID())){ // same as above have to implent the search  // same as above need a .equals with get patient id
+                return patients[mid];
+            }
+            else if 
+                (pid.compareTo(patients[mid].getPatientID()) < 0){
+                high=mid-1;
+            }
+            else if (pid.compareTo(patients[mid].getPatientID()) > 0){ // must fix syntax 
+            
+                low=mid+1;
+            }
+            return patients[mid]; // not sure if this correct
+            
+        }
+        return null;
     }
 
     /**
@@ -46,7 +80,7 @@ public class EfficiencyTester {
      * - where you learned about it
      * - why it works
      */
-    public Patient logNSearch(Patient[] patients, String pid) {
+    public Patient logNSearch(Patient[] patients, String pid) { // gonna do this last
         // TODO OPTIONAL: Research and implement a second O(log n) algorithm.
         // Cite your source and explain the approach in a comment before the logic.
         return null; // Remove this line and implement the method.
