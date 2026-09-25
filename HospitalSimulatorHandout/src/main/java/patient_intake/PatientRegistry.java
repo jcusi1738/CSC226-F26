@@ -100,7 +100,7 @@ public class PatientRegistry {
     
     @Override
     public String toString() {
-        return "PateintRegistry{size=" + size + "}"; // TODO REQUIRED: Return a useful representation of the registry.
+        return "PatientRegistry{size=" + size + "}"; // TODO REQUIRED: Return a useful representation of the registry.
     }
 
 }

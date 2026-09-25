@@ -49,7 +49,7 @@ public class EfficiencyTester {
         int high=patients.length-1;
         int low=0;
         // int mid= (high+low)/2; // might put inside function
-        while(low<high){
+        while(low<=high){
             int mid= (high+low)/2;
             if(pid.compareTo(patients[mid].getPatientID())==0){ // same as above have to implent the search  // same as above need a .equals with get patient id
                 return patients[mid];
@@ -81,12 +81,34 @@ public class EfficiencyTester {
      * - where you learned about it
      * - why it works
      */
-    public Patient logNSearch(Patient[] patients, String pid) { // gonna do this last
+    public Patient logNSearch(Patient[] patients, String pid) { 
+        int high=patients.length-1;
+        int low=0;
+        // int mid= (high+low)/2; // might put inside function
+        while(low<=high){
+            int mid= (high+low)/2;
+            if(pid.compareTo(patients[mid].getPatientID())==0){ // same as above have to implent the search  // same as above need a .equals with get patient id
+                return patients[mid];
+            }
+            else if 
+                (pid.compareTo(patients[mid].getPatientID()) < 0){
+                high=mid-1;
+            }
+            else if (pid.compareTo(patients[mid].getPatientID()) > 0){ // must fix syntax 
+            
+                low=mid+1;
+            }
+        
+        
+        
+        // gonna do this last
         // TODO OPTIONAL: Research and implement a second O(log n) algorithm.
         // Cite your source and explain the approach in a comment before the logic.
-        return null; // Remove this line and implement the method.
+         // Remove this line and implement the method.
+        }
+        return null;
     }
-
+    
     public void timeDemo() {
         long startTime = System.nanoTime();
         for (int i = 0; i < 100000; i++) {
