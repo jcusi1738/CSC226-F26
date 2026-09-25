@@ -12,7 +12,24 @@ public class Main {
         
         // TODO REQUIRED: Sort the data by patientID when needed.
         // TODO REQUIRED: Run each search method and print a found and not-found example.
-    
+        Patient [] patients = generatePatients(3); 
+        EfficiencyTester tester = new EfficiencyTester();
+        Patient result = tester.linearSearch(patients, "P001"); // this to test the function
+        if (result != null) {
+            System.out.println("Patient found at index: " + result.getPatientID());
+        } 
+        else {
+            System.out.println("Patient not found.");
+        }
+        patients = sortByPatientId(patients);
+        Patient result2= tester.binarySearch(patients, "P002"); // null because doesnt know the number yet
+        if (result2 != null) {
+            System.out.println("Patient found at index: " + result2.getPatientID());
+        }
+         else {
+            System.out.println("Patient not found.");
+        }
+
         // TODO OPTIONAL: Call timeDemo() to compare algorithm runtimes.
     }
 
