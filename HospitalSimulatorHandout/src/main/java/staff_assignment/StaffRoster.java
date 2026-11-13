@@ -2,6 +2,7 @@ package staff_assignment;
 
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.NoSuchElementException;
 
 import medical_action_tracking.TreatmentHistory;
 import medical_action_tracking.TreatmentRecord;
@@ -17,7 +18,7 @@ public class StaffRoster {
     //  Add the staff member to the correct tier, and reject a duplicate staffId.
     public void addStaff(StaffMember staff) {
         if (staff == null || findById(staff.getStaffId()) != null) {
-            return;
+            throw new IllegalArgumentException("Staff member is null or has a duplicate staff ID");
         }
         tiers.putIfAbsent(staff.getSeniority(), new TreeSet<>());
         tiers.get(staff.getSeniority()).add(staff);
@@ -25,22 +26,29 @@ public class StaffRoster {
 
     //  Pick the least-loaded staff member at or above "required", raise their load by 1, and return them.
     public StaffMember assign(Seniority required) {
-        for (Seniority seniority : tiers.descendingKeySet()) {
+        StaffMember leastLoaded = null;
+        for (Seniority seniority : tiers.keySet()) {
             if (seniority.compareTo(required) >= 0) {
                 TreeSet<StaffMember> tier = tiers.get(seniority);
-                if (!tier.isEmpty()) {
-                    StaffMember leastLoaded = tier.first();
-                    changeLoad(leastLoaded, leastLoaded.getCurrentLoad() + 1);
-                    return leastLoaded;
+                if (!tier.isEmpty()
+                        && (leastLoaded == null
+                        || tier.first().getCaseLoad() < leastLoaded.getCaseLoad())) {
+                    leastLoaded = tier.first();
                 }
             }
         }
-        return null;
+        if (leastLoaded == null) {
+            throw new NoSuchElementException("No staff member meets the required seniority");
+        }
+        changeLoad(leastLoaded, leastLoaded.getCaseLoad() + 1);
+        return leastLoaded;
     }
 
     //  Lower the staff member's load by 1 (never below 0) and keep the tree ordered.
     public void release(StaffMember staff) {
-        changeLoad(staff, staff.getCurrentLoad() - 1);
+        if (staff != null) {
+            changeLoad(staff, staff.getCaseLoad() - 1);
+        }
     }
 
     //  Return how many staff members are in the roster.
@@ -70,7 +78,7 @@ public class StaffRoster {
         }
         for (TreeSet<StaffMember> tier : tiers.values()) {
             if (tier.remove(member)) {
-                member.setCurrentLoad(newLoad);
+                member.setCaseLoad(newLoad);
                 tier.add(member);
                 return;
             }
@@ -82,29 +90,28 @@ public class StaffRoster {
         if (patientID == null || treatment == null || timestamp == null) {
             return null;
         }
-        for (Seniority seniority : tiers.keySet()) {
-            if (seniority.compareTo(required) >= 0) {
-                StaffMember staff = assign(seniority);
-                if (staff != null) {
-                    history.record(new TreatmentRecord(patientID, treatment, timestamp, staff.getStaffId()));
-                    return staff;
-                }
-            }
+        StaffMember staff = assign(required);
+        if (staff != null) {
+            history.addTreatment(patientID, treatment, timestamp, staff.getStaffId());
         }
-        return null;
+        return staff;
     }
 
     // TODO: Pop the globally most recent treatment with your Week 3 undo, release whoever performed it, and return them (null if none).
     public StaffMember undoLastAssignment() {
-        if (history.isEmpty()) {
+        TreatmentRecord record = history.undoLastAction();
+        if (record == null) {
             return null;
         }
-        TreatmentRecord record = history.pop();
-        StaffMember staff = findById(record.getStaffId());
+        StaffMember staff = findById(record.getPerformedBy());
         if (staff != null) {
             release(staff);
         }
         return staff;
+    }
+
+    public String displayHistory() {
+        return history.displayHistory();
     }
 
     // TODO: Return the staff member with this staffId, or null if they are not in the roster.
